@@ -1,0 +1,31 @@
+.suggestions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .suggestions-grid { grid-template-columns: 1fr; }
+}
+
+.suggestion-confidence { font-size: 12.5px; color: var(--color-gray); }
+.suggestion-confidence-track {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.suggestion-confidence-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2F6FED, #14B8A6);
+  border-radius: var(--radius-full);
+}
+.suggestion-apply-btn { align-self: flex-start; padding: 9px 18px; font-size: 13px; }
+.suggestion-applied {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-success);
+  font-weight: 600;
+  font-size: 13.5px;
+}
+.spin-icon { animation: dqp-spin 0.9s linear infinite; }

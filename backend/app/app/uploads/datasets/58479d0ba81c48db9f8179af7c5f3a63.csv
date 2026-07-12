@@ -1,0 +1,4 @@
+id,age,amount,category,email,signup_date
+1,25,100.0,gold,alice@example.com,2024-01-05
+2,30,120.0,gold,bob@example.com,2024-01-06
+3,28,110.0,gold,carol@example.com,2024-01-07

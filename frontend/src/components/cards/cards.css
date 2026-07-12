@@ -1,0 +1,114 @@
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.accent-primary .stat-card-icon { background: var(--color-primary-light); color: var(--color-primary); }
+.accent-success .stat-card-icon { background: var(--color-success-bg); color: var(--color-success); }
+.accent-warning .stat-card-icon { background: var(--color-warning-bg); color: var(--color-warning); }
+.accent-danger .stat-card-icon { background: var(--color-danger-bg); color: var(--color-danger); }
+
+.stat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.stat-card-label {
+  font-size: 13px;
+  color: var(--color-gray);
+  font-weight: 500;
+}
+.stat-card-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+[data-theme='dark'] .stat-card-value { color: #F4F6FA; }
+.stat-card-delta {
+  font-size: 12px;
+  font-weight: 600;
+}
+.delta-success { color: var(--color-success); }
+.delta-warning { color: var(--color-warning); }
+.delta-danger { color: var(--color-danger); }
+
+/* Panel card (chart / table wrapper) */
+.panel-card {
+  padding: 22px;
+}
+.panel-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.panel-card-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.panel-card-header .panel-subtitle {
+  font-size: 12px;
+  color: var(--color-gray);
+  margin-top: 2px;
+  display: block;
+}
+
+/* Suggestion card */
+.suggestion-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+}
+.suggestion-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.suggestion-text {
+  font-size: 14px;
+  color: var(--color-gray-dark);
+  line-height: 1.5;
+}
+.suggestion-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--color-gray);
+}
+
+/* Activity list */
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.activity-text { font-size: 13.5px; color: var(--color-gray-dark); }
+.activity-text b { font-weight: 600; }
+.activity-time { font-size: 12px; color: var(--color-gray-light); white-space: nowrap; }

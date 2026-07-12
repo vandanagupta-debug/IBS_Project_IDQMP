@@ -1,0 +1,22 @@
+.algo-card {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+}
+.algo-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.algo-card h3 { font-size: 15px; margin-bottom: 6px; }
+.algo-card-desc { font-size: 12.5px; color: var(--color-gray); line-height: 1.5; margin-bottom: 12px; }
+.algo-card-count { font-size: 22px; font-weight: 700; color: var(--color-navy); }
+[data-theme='dark'] .algo-card-count { color: #F4F6FA; }
+.algo-card-count span { font-size: 12px; font-weight: 500; color: var(--color-gray); margin-left: 6px; }

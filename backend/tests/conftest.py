@@ -15,16 +15,14 @@ from app.database.base import Base  # noqa: E402
 from app.database.deps import get_db  # noqa: E402
 
 # Import every model so Base.metadata is aware of all tables before create_all().
-from app.models import (
-    endpoint,
-    testrun,
-    testcase,
-    user,
-    dataset,
-    dq_report,
-    collection,
-    report,
-)  # noqa: E402,F401
+from app.models.endpoint import Endpoint  # noqa: E402,F401
+from app.models.testrun import TestRun  # noqa: E402,F401
+from app.models.testcase import TestCase  # noqa: E402,F401
+from app.models.user import User  # noqa: E402,F401
+from app.models.dataset import Dataset  # noqa: E402,F401
+from app.models.dq_report import DQReport  # noqa: E402,F401
+from app.models.collection import Collection  # noqa: E402,F401
+from app.models.report import Report  # noqa: E402,F401
 
 TEST_DATABASE_URL = "sqlite:///:memory:"
 

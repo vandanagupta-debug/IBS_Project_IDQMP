@@ -8,6 +8,7 @@ class Dataset(Base):
     Row/column counts here are computed once at upload time for quick display;
     the full profiling engine (Phase 2) recomputes richer statistics on demand.
     """
+
     __tablename__ = "datasets"
 
     id = Column(Integer, primary_key=True, index=True)

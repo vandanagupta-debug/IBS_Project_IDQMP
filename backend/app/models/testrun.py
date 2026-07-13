@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, JSON
 from app.database.base import Base
 
+
 class TestRun(Base):
     __tablename__ = "testruns"
 

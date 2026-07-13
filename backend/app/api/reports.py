@@ -6,6 +6,7 @@ from app.models.testrun import TestRun
 
 router = APIRouter()
 
+
 @router.get("/reports")
 def reports(db: Session = Depends(get_db)):
     return db.query(TestRun).all()

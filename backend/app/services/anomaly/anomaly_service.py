@@ -6,6 +6,7 @@ columns of the uploaded dataset: Isolation Forest, Local Outlier Factor,
 Z-score, and IQR. Nothing here reads from a sample dataset — every score is
 computed against `load_dataframe(dataset)`.
 """
+
 from __future__ import annotations
 
 import numpy as np
@@ -17,7 +18,10 @@ from sklearn.preprocessing import MinMaxScaler
 
 from app.models.dataset import Dataset
 from app.schemas.anomaly import (
-    AlgorithmSummaryOut, AnomalySummaryOut, ScatterPointOut, OutlierRowOut,
+    AlgorithmSummaryOut,
+    AnomalySummaryOut,
+    ScatterPointOut,
+    OutlierRowOut,
 )
 from app.services.datasets.dataframe_loader import load_dataframe, numeric_columns
 
@@ -79,7 +83,9 @@ def build_anomaly_summary(dataset: Dataset) -> AnomalySummaryOut:
     }
 
     algorithms = [
-        AlgorithmSummaryOut(name=name, outliers=int(mask.sum()), description=descriptions[name])
+        AlgorithmSummaryOut(
+            name=name, outliers=int(mask.sum()), description=descriptions[name]
+        )
         for name, mask in flags.items()
     ]
 
@@ -97,14 +103,20 @@ def build_anomaly_summary(dataset: Dataset) -> AnomalySummaryOut:
     scaler = MinMaxScaler(feature_range=(0, 100))
     coords_scaled = scaler.fit_transform(coords)
     scatter = [
-        ScatterPointOut(x=round(float(px), 2), y=round(float(py), 2), outlier=bool(combined_outlier[i]))
+        ScatterPointOut(
+            x=round(float(px), 2),
+            y=round(float(py), 2),
+            outlier=bool(combined_outlier[i]),
+        )
         for i, (px, py) in enumerate(coords_scaled)
     ]
 
     # --- Flagged rows table ---
     original_index = work.index
     flagged_positions = np.where(combined_outlier)[0]
-    flagged_positions = sorted(flagged_positions, key=lambda p: -ensemble_votes[p])[:MAX_FLAGGED_ROWS_RETURNED]
+    flagged_positions = sorted(flagged_positions, key=lambda p: -ensemble_votes[p])[
+        :MAX_FLAGGED_ROWS_RETURNED
+    ]
 
     outlier_rows = []
     for pos in flagged_positions:
@@ -117,7 +129,9 @@ def build_anomaly_summary(dataset: Dataset) -> AnomalySummaryOut:
         col_name = num_cols[worst_col_i]
         value = df.loc[row_idx, col_name]
         col_series = df[col_name].dropna()
-        expected_range = f"{col_series.quantile(0.05):.2f} - {col_series.quantile(0.95):.2f}"
+        expected_range = (
+            f"{col_series.quantile(0.05):.2f} - {col_series.quantile(0.95):.2f}"
+        )
 
         severity = "high" if votes >= 3 else "medium" if votes == 2 else "low"
 

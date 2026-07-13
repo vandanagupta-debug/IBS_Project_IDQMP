@@ -5,6 +5,7 @@ recommendations, validation, cleaning, reports) reads through this function
 instead of loading any sample/hardcoded CSV, so they all operate on exactly
 the dataset the user uploaded.
 """
+
 import os
 import pandas as pd
 
@@ -17,7 +18,9 @@ class DatasetNotReadyError(Exception):
 
 def load_dataframe(dataset: Dataset) -> pd.DataFrame:
     if dataset.status != "processed":
-        raise DatasetNotReadyError(f"Dataset is not ready for analysis (status: {dataset.status}).")
+        raise DatasetNotReadyError(
+            f"Dataset is not ready for analysis (status: {dataset.status})."
+        )
 
     if not dataset.file_path or not os.path.exists(dataset.file_path):
         raise DatasetNotReadyError("Stored file is missing from disk.")
@@ -51,7 +54,8 @@ def duplicate_row_count(df: pd.DataFrame) -> int:
     auto-increment 'id') since those make every row look unique even when
     the actual business data is duplicated."""
     id_like = {
-        c for c in df.columns
+        c
+        for c in df.columns
         if str(c).strip().lower() in {"id", "index", "_id"}
         or str(c).strip().lower().endswith("_id")
     }

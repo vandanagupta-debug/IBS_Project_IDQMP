@@ -5,6 +5,7 @@ Computes six weighted quality dimensions directly from the uploaded
 dataset. No sample/reference data is used anywhere in this module; every
 score is derived from the dataframe itself.
 """
+
 from __future__ import annotations
 
 import re
@@ -69,7 +70,8 @@ def _validity(df: pd.DataFrame) -> float:
 def _consistency(df: pd.DataFrame) -> float:
     """Penalizes categorical columns whose values differ only by case/whitespace."""
     cat_cols = [
-        c for c in categorical_columns(df)
+        c
+        for c in categorical_columns(df)
         if 1 < df[c].nunique(dropna=True) <= max(50, int(len(df) * 0.5))
     ]
     if not cat_cols:
@@ -118,7 +120,11 @@ def _accuracy(df: pd.DataFrame) -> float:
 
 def _freshness(df: pd.DataFrame) -> tuple[float, str]:
     """Looks for a datetime-like column and scores recency of its most recent value."""
-    date_cols = [c for c in df.columns if re.search(r"date|time|_at$|_dt$", str(c), re.IGNORECASE)]
+    date_cols = [
+        c
+        for c in df.columns
+        if re.search(r"date|time|_at$|_dt$", str(c), re.IGNORECASE)
+    ]
     best_max = None
     best_col = None
     for col in date_cols:
@@ -141,7 +147,10 @@ def _freshness(df: pd.DataFrame) -> tuple[float, str]:
 
     # 100 at 0 days old, decaying to 40 by 2 years, floor at 20.
     score = max(20.0, 100 - (age_days / 730) * 60)
-    return round(score, 1), f"Most recent value in '{best_col}' is {age_days} day(s) old."
+    return (
+        round(score, 1),
+        f"Most recent value in '{best_col}' is {age_days} day(s) old.",
+    )
 
 
 def build_quality_score(dataset: Dataset) -> QualityScoreOut:
@@ -155,14 +164,38 @@ def build_quality_score(dataset: Dataset) -> QualityScoreOut:
     freshness, freshness_note = _freshness(df)
 
     dimensions = [
-        QualityDimensionOut(name="Completeness", score=completeness, description="Share of non-missing values across all columns."),
-        QualityDimensionOut(name="Validity", score=validity, description="Values conforming to their column's expected format and type."),
-        QualityDimensionOut(name="Consistency", score=consistency, description="Agreement of categorical values after normalizing case and whitespace."),
-        QualityDimensionOut(name="Accuracy", score=accuracy, description="Share of numeric values within the expected (IQR-based) range."),
-        QualityDimensionOut(name="Freshness", score=freshness, description=freshness_note),
-        QualityDimensionOut(name="Uniqueness", score=uniqueness, description="Absence of exact duplicate rows."),
+        QualityDimensionOut(
+            name="Completeness",
+            score=completeness,
+            description="Share of non-missing values across all columns.",
+        ),
+        QualityDimensionOut(
+            name="Validity",
+            score=validity,
+            description="Values conforming to their column's expected format and type.",
+        ),
+        QualityDimensionOut(
+            name="Consistency",
+            score=consistency,
+            description="Agreement of categorical values after normalizing case and whitespace.",
+        ),
+        QualityDimensionOut(
+            name="Accuracy",
+            score=accuracy,
+            description="Share of numeric values within the expected (IQR-based) range.",
+        ),
+        QualityDimensionOut(
+            name="Freshness", score=freshness, description=freshness_note
+        ),
+        QualityDimensionOut(
+            name="Uniqueness",
+            score=uniqueness,
+            description="Absence of exact duplicate rows.",
+        ),
     ]
 
     overall = round(sum(d.score for d in dimensions) / len(dimensions), 1)
 
-    return QualityScoreOut(dataset_id=dataset.id, overall=overall, dimensions=dimensions)
+    return QualityScoreOut(
+        dataset_id=dataset.id, overall=overall, dimensions=dimensions
+    )

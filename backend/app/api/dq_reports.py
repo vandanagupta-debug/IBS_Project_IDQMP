@@ -8,7 +8,10 @@ from app.database.deps import get_db
 from app.models.dataset import Dataset
 from app.models.dq_report import DQReport
 from app.schemas.dq_report import (
-    DQReportDeleteOut, DQReportDetailOut, DQReportGenerateIn, DQReportOut,
+    DQReportDeleteOut,
+    DQReportDetailOut,
+    DQReportGenerateIn,
+    DQReportOut,
 )
 from app.services.dq_report.dq_report_service import generate_report
 from app.services.datasets.dataframe_loader import DatasetNotReadyError
@@ -27,7 +30,9 @@ def create_report(payload: DQReportGenerateIn, db: Session = Depends(get_db)):
     if not dataset:
         raise HTTPException(status_code=404, detail="Dataset not found.")
     if dataset.status != "processed":
-        raise HTTPException(status_code=400, detail=f"Dataset is not ready (status: {dataset.status}).")
+        raise HTTPException(
+            status_code=400, detail=f"Dataset is not ready (status: {dataset.status})."
+        )
 
     try:
         return generate_report(db, dataset, payload.name, payload.format)
@@ -51,8 +56,15 @@ def download_report(report_id: int, db: Session = Depends(get_db)):
     if not report:
         raise HTTPException(status_code=404, detail="Report not found.")
     if not report.file_path:
-        raise HTTPException(status_code=404, detail="No downloadable file was generated for this report format.")
-    return FileResponse(path=report.file_path, filename=f"{report.name}.pdf", media_type="application/pdf")
+        raise HTTPException(
+            status_code=404,
+            detail="No downloadable file was generated for this report format.",
+        )
+    return FileResponse(
+        path=report.file_path,
+        filename=f"{report.name}.pdf",
+        media_type="application/pdf",
+    )
 
 
 @router.delete("/{report_id}", response_model=DQReportDeleteOut)

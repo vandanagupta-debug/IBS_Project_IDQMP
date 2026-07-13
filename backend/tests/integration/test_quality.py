@@ -8,7 +8,14 @@ def test_quality_score_shape_and_range(client, uploaded_dataset):
     assert len(body["dimensions"]) == 6
 
     names = {d["name"] for d in body["dimensions"]}
-    assert names == {"Completeness", "Validity", "Consistency", "Accuracy", "Freshness", "Uniqueness"}
+    assert names == {
+        "Completeness",
+        "Validity",
+        "Consistency",
+        "Accuracy",
+        "Freshness",
+        "Uniqueness",
+    }
     for dim in body["dimensions"]:
         assert 0 <= dim["score"] <= 100
         assert dim["description"]

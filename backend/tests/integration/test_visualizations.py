@@ -11,7 +11,9 @@ def test_visualizations_shape(client, uploaded_dataset):
     assert isinstance(body["scatterOutliers"], list)
 
 
-def test_visualizations_correlation_heatmap_present_with_multiple_numeric_columns(client, uploaded_dataset):
+def test_visualizations_correlation_heatmap_present_with_multiple_numeric_columns(
+    client, uploaded_dataset
+):
     body = client.get(f"/datasets/{uploaded_dataset['id']}/visualizations").json()
     # sample dataset has 'age' and 'amount' as numeric columns.
     assert body["correlationHeatmap"] is not None

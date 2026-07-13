@@ -7,6 +7,7 @@ re-reads the file with pandas every request, which is fine for the CSV/XLSX
 file sizes this MVP targets. A caching layer can be added later without
 changing the response contract.
 """
+
 import os
 from typing import Optional
 
@@ -42,7 +43,9 @@ def _infer_friendly_type(series: pd.Series) -> str:
         return "integer"
     if pd.api.types.is_float_dtype(series):
         return "float"
-    if pd.api.types.is_object_dtype(series) or isinstance(series.dtype, pd.CategoricalDtype):
+    if pd.api.types.is_object_dtype(series) or isinstance(
+        series.dtype, pd.CategoricalDtype
+    ):
         non_null = series.dropna()
         if len(non_null) == 0:
             return "string"

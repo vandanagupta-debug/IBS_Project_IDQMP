@@ -6,6 +6,7 @@ router = APIRouter()
 
 parsed_endpoints = []
 
+
 @router.post("/upload")
 async def upload(file: UploadFile = File(...)):
     data = json.loads(await file.read())

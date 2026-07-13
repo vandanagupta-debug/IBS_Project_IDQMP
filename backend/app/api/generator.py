@@ -6,6 +6,7 @@ router = APIRouter()
 
 generated_tests = []
 
+
 @router.post("/generate")
 def generate():
     global generated_tests

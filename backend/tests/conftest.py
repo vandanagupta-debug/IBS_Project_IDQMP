@@ -13,8 +13,18 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from app.main import app  # noqa: E402
 from app.database.base import Base  # noqa: E402
 from app.database.deps import get_db  # noqa: E402
+
 # Import every model so Base.metadata is aware of all tables before create_all().
-from app.models import endpoint, testrun, testcase, user, dataset, dq_report, collection, report  # noqa: E402,F401
+from app.models import (
+    endpoint,
+    testrun,
+    testcase,
+    user,
+    dataset,
+    dq_report,
+    collection,
+    report,
+)  # noqa: E402,F401
 
 TEST_DATABASE_URL = "sqlite:///:memory:"
 

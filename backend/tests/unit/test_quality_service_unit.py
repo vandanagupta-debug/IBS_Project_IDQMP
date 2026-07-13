@@ -42,10 +42,12 @@ def test_freshness_without_date_column_is_neutral():
 
 def test_build_quality_score_end_to_end(tmp_path):
     csv_path = tmp_path / "sample.csv"
-    pd.DataFrame({
-        "id": [1, 2, 3, 4],
-        "value": [10.0, 12.0, None, 11.0],
-    }).to_csv(csv_path, index=False)
+    pd.DataFrame(
+        {
+            "id": [1, 2, 3, 4],
+            "value": [10.0, 12.0, None, 11.0],
+        }
+    ).to_csv(csv_path, index=False)
 
     class FakeDataset:
         id = 1

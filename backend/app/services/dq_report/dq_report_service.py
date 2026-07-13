@@ -5,6 +5,7 @@ Builds one consolidated JSON payload (profiling + quality + validation +
 anomalies + insights + recommendations) for a dataset and persists a
 DQReport row so report history can be listed/downloaded/deleted later.
 """
+
 from __future__ import annotations
 
 import json
@@ -22,7 +23,9 @@ from app.services.anomaly.anomaly_service import build_anomaly_summary
 from app.services.insights.insights_service import build_insights
 from app.services.recommendation.recommendation_service import build_recommendations
 
-REPORTS_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "app", "generated_reports")
+REPORTS_ROOT = os.path.join(
+    os.path.dirname(os.path.dirname(__file__)), "..", "app", "generated_reports"
+)
 REPORTS_ROOT = os.path.abspath(REPORTS_ROOT)
 
 
@@ -65,17 +68,31 @@ def _render_pdf(payload: dict, name: str) -> str:
     story.append(Spacer(1, 12))
 
     q = payload["quality"]
-    story.append(Paragraph(f"Overall Quality Score: {q['overall']} / 100", styles["Heading2"]))
+    story.append(
+        Paragraph(f"Overall Quality Score: {q['overall']} / 100", styles["Heading2"])
+    )
     for dim in q["dimensions"]:
-        story.append(Paragraph(f"- {dim['name']}: {dim['score']} — {dim['description']}", styles["Normal"]))
+        story.append(
+            Paragraph(
+                f"- {dim['name']}: {dim['score']} — {dim['description']}",
+                styles["Normal"],
+            )
+        )
     story.append(Spacer(1, 12))
 
     v = payload["validation"]
-    story.append(Paragraph(f"Validation: {v['passed']}/{v['totalChecks']} checks passed", styles["Heading2"]))
+    story.append(
+        Paragraph(
+            f"Validation: {v['passed']}/{v['totalChecks']} checks passed",
+            styles["Heading2"],
+        )
+    )
     story.append(Spacer(1, 12))
 
     a = payload["anomalies"]
-    story.append(Paragraph(f"Anomalies: {a['totalOutliers']} flagged rows", styles["Heading2"]))
+    story.append(
+        Paragraph(f"Anomalies: {a['totalOutliers']} flagged rows", styles["Heading2"])
+    )
     story.append(Spacer(1, 12))
 
     story.append(Paragraph("Top Recommendations", styles["Heading2"]))

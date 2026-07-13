@@ -5,8 +5,13 @@ def test_insights_shape(client, uploaded_dataset):
 
     assert body["dataset_id"] == uploaded_dataset["id"]
     for key in [
-        "topMissingColumns", "correlatedFeatures", "skewedColumns",
-        "constantColumns", "highCardinalityColumns", "outlierColumns", "suspiciousPatterns",
+        "topMissingColumns",
+        "correlatedFeatures",
+        "skewedColumns",
+        "constantColumns",
+        "highCardinalityColumns",
+        "outlierColumns",
+        "suspiciousPatterns",
     ]:
         assert key in body
 

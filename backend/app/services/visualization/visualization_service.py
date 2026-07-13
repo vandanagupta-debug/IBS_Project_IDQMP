@@ -5,6 +5,7 @@ Assembles chart-ready JSON (consumed directly by recharts on the frontend)
 from the uploaded dataset. Chart types are chosen automatically based on
 each column's inferred type.
 """
+
 from __future__ import annotations
 
 import pandas as pd
@@ -12,10 +13,19 @@ from sklearn.preprocessing import MinMaxScaler
 
 from app.models.dataset import Dataset
 from app.schemas.visualization import (
-    CategoryFrequencyOut, CompletenessByColumnOut, CorrelationHeatmapOut,
-    MissingByColumnOut, NameValueOut, ScatterPointOut, VisualizationsOut,
+    CategoryFrequencyOut,
+    CompletenessByColumnOut,
+    CorrelationHeatmapOut,
+    MissingByColumnOut,
+    NameValueOut,
+    ScatterPointOut,
+    VisualizationsOut,
 )
-from app.services.datasets.dataframe_loader import load_dataframe, numeric_columns, categorical_columns
+from app.services.datasets.dataframe_loader import (
+    load_dataframe,
+    numeric_columns,
+    categorical_columns,
+)
 from app.services.quality.quality_service import build_quality_score
 from app.services.validation.validation_service import build_validation_summary
 
@@ -108,7 +118,9 @@ def build_visualizations(dataset: Dataset) -> VisualizationsOut:
 
     total = len(df)
     completeness = [
-        CompletenessByColumnOut(column=str(c), completeness=round(100 * (1 - int(v) / total), 1))
+        CompletenessByColumnOut(
+            column=str(c), completeness=round(100 * (1 - int(v) / total), 1)
+        )
         for c, v in missing.items()
     ][:MAX_COLUMNS_SHOWN]
 
@@ -121,5 +133,7 @@ def build_visualizations(dataset: Dataset) -> VisualizationsOut:
         scatterOutliers=_scatter_outliers(df),
         categoryFrequency=_category_frequency(df),
         correlationHeatmap=_correlation_heatmap(df),
-        validationBreakdown=[NameValueOut(name=b.name, value=b.value) for b in validation.breakdown],
+        validationBreakdown=[
+            NameValueOut(name=b.name, value=b.value) for b in validation.breakdown
+        ],
     )

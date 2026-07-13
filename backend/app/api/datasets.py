@@ -21,7 +21,9 @@ async def upload_dataset(file: UploadFile = File(...), db: Session = Depends(get
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
-    stored_filename, absolute_path, size_bytes = await dataset_service.save_upload(file, file_type)
+    stored_filename, absolute_path, size_bytes = await dataset_service.save_upload(
+        file, file_type
+    )
 
     dataset = Dataset(
         original_filename=file.filename,

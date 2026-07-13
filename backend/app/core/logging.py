@@ -6,6 +6,7 @@ logs across the API layer, services, and background tasks. Import
 `configure_logging()` once at startup (see app.main) rather than configuring
 loggers ad-hoc in individual modules.
 """
+
 from __future__ import annotations
 
 import sys

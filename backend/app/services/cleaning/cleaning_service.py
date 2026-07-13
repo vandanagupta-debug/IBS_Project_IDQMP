@@ -6,6 +6,7 @@ and writes the result as a new dataset (so it can be downloaded through the
 existing /datasets/{id}/download endpoint). Nothing here touches a sample
 or hardcoded file.
 """
+
 from __future__ import annotations
 
 import os
@@ -15,8 +16,16 @@ import pandas as pd
 from sqlalchemy.orm import Session
 
 from app.models.dataset import Dataset
-from app.schemas.cleaning import CleaningOperationOut, CleaningResultOut, CleaningSnapshotOut
-from app.services.datasets.dataframe_loader import load_dataframe, numeric_columns, categorical_columns
+from app.schemas.cleaning import (
+    CleaningOperationOut,
+    CleaningResultOut,
+    CleaningSnapshotOut,
+)
+from app.services.datasets.dataframe_loader import (
+    load_dataframe,
+    numeric_columns,
+    categorical_columns,
+)
 from app.services.datasets.dataset_service import UPLOAD_ROOT, ensure_upload_dir
 
 
@@ -30,7 +39,10 @@ def _quality_for_df(dataset_id: int, df: pd.DataFrame) -> float:
     consistency = qs._consistency(df)
     accuracy = qs._accuracy(df)
     freshness, _ = qs._freshness(df)
-    return round((completeness + uniqueness + validity + consistency + accuracy + freshness) / 6, 1)
+    return round(
+        (completeness + uniqueness + validity + consistency + accuracy + freshness) / 6,
+        1,
+    )
 
 
 def run_cleaning_pipeline(dataset: Dataset, db: Session) -> CleaningResultOut:
@@ -51,7 +63,9 @@ def run_cleaning_pipeline(dataset: Dataset, db: Session) -> CleaningResultOut:
             mode = cleaned[col].mode(dropna=True)
             fill_value = mode.iloc[0] if not mode.empty else ""
             cleaned[col] = cleaned[col].fillna(fill_value)
-    operations.append(CleaningOperationOut(name="Missing values handled", count=missing_before))
+    operations.append(
+        CleaningOperationOut(name="Missing values handled", count=missing_before)
+    )
 
     # 2) Duplicates
     dup_count = int(cleaned.duplicated().sum())
@@ -67,7 +81,9 @@ def run_cleaning_pipeline(dataset: Dataset, db: Session) -> CleaningResultOut:
             coerced = pd.to_numeric(cleaned[col], errors="coerce")
             type_fixes += int(coerced.notna().sum())
             cleaned[col] = coerced
-    operations.append(CleaningOperationOut(name="Data type corrections", count=type_fixes))
+    operations.append(
+        CleaningOperationOut(name="Data type corrections", count=type_fixes)
+    )
 
     # 4) Outliers — clip numeric columns to their IQR bounds
     outliers_treated = 0
@@ -83,7 +99,9 @@ def run_cleaning_pipeline(dataset: Dataset, db: Session) -> CleaningResultOut:
         mask = (cleaned[col] < lower) | (cleaned[col] > upper)
         outliers_treated += int(mask.sum())
         cleaned[col] = cleaned[col].clip(lower, upper)
-    operations.append(CleaningOperationOut(name="Outliers treated", count=outliers_treated))
+    operations.append(
+        CleaningOperationOut(name="Outliers treated", count=outliers_treated)
+    )
 
     after_score = _quality_for_df(dataset.id, cleaned)
 

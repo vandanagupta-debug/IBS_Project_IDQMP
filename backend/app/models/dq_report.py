@@ -9,6 +9,7 @@ class DQReport(Base):
     stored as JSON text at generation time so report history can be listed
     and re-viewed without recomputing against the dataset every time.
     """
+
     __tablename__ = "dq_reports"
 
     id = Column(Integer, primary_key=True, index=True)

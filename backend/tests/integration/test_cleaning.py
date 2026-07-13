@@ -9,8 +9,10 @@ def test_cleaning_pipeline_runs_and_improves_quality(client, uploaded_dataset):
 
     op_names = {op["name"] for op in body["operations"]}
     assert op_names == {
-        "Missing values handled", "Duplicates removed",
-        "Data type corrections", "Outliers treated",
+        "Missing values handled",
+        "Duplicates removed",
+        "Data type corrections",
+        "Outliers treated",
     }
 
     # Duplicates went from 1 -> 0, so the cleaned dataset has fewer rows.

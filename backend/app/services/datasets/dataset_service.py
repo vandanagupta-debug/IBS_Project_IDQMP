@@ -7,7 +7,9 @@ from fastapi import UploadFile
 
 # Follows the existing convention of app/uploads/<category>/ used by the
 # Postman/OpenAPI upload feature (see app/api/upload.py).
-UPLOAD_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "app", "uploads", "datasets")
+UPLOAD_ROOT = os.path.join(
+    os.path.dirname(os.path.dirname(__file__)), "..", "app", "uploads", "datasets"
+)
 UPLOAD_ROOT = os.path.abspath(UPLOAD_ROOT)
 
 ALLOWED_EXTENSIONS = {".csv": "csv", ".xlsx": "xlsx", ".xls": "xls"}
@@ -21,7 +23,9 @@ def validate_extension(filename: str) -> str:
     """Returns the normalized file_type or raises ValueError if unsupported."""
     ext = os.path.splitext(filename)[1].lower()
     if ext not in ALLOWED_EXTENSIONS:
-        raise ValueError(f"Unsupported file type '{ext}'. Only .csv, .xlsx, and .xls are supported.")
+        raise ValueError(
+            f"Unsupported file type '{ext}'. Only .csv, .xlsx, and .xls are supported."
+        )
     return ALLOWED_EXTENSIONS[ext]
 
 

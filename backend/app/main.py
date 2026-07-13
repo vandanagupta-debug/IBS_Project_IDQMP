@@ -28,10 +28,7 @@ configure_logging()
 app = FastAPI(title=settings.APP_NAME, version=settings.APP_VERSION)
 
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"]
+    CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
 )
 
 Base.metadata.create_all(bind=engine)

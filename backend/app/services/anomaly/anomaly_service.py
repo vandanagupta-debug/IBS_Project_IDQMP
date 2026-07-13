@@ -9,7 +9,6 @@ computed against `load_dataframe(dataset)`.
 from __future__ import annotations
 
 import numpy as np
-import pandas as pd
 from sklearn.ensemble import IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.impute import SimpleImputer
@@ -91,11 +90,9 @@ def build_anomaly_summary(dataset: Dataset) -> AnomalySummaryOut:
     # --- Scatter plot (2D projection) ---
     if X.shape[1] >= 2:
         coords = X[:, :2]
-        x_label, y_label = num_cols[0], num_cols[1]
     else:
         pca = PCA(n_components=1)
         coords = np.column_stack([pca.fit_transform(X).ravel(), np.zeros(n)])
-        x_label, y_label = num_cols[0], "—"
 
     scaler = MinMaxScaler(feature_range=(0, 100))
     coords_scaled = scaler.fit_transform(coords)

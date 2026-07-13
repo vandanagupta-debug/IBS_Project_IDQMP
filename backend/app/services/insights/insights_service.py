@@ -8,7 +8,6 @@ suspicious-pattern heuristics. No precomputed/sample insights are used.
 """
 from __future__ import annotations
 
-import numpy as np
 import pandas as pd
 
 from app.models.dataset import Dataset

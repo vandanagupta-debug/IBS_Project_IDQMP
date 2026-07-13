@@ -21,7 +21,7 @@ from app.api.dq_reports import router as dq_reports_router
 
 from app.database.base import Base
 from app.database.session import engine
-from app.models import endpoint, testrun, dataset, dq_report
+from app.models import endpoint, testrun, dataset, dq_report  # noqa: F401
 
 configure_logging()
 

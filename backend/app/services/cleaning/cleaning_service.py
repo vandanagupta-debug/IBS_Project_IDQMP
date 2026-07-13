@@ -18,7 +18,6 @@ from app.models.dataset import Dataset
 from app.schemas.cleaning import CleaningOperationOut, CleaningResultOut, CleaningSnapshotOut
 from app.services.datasets.dataframe_loader import load_dataframe, numeric_columns, categorical_columns
 from app.services.datasets.dataset_service import UPLOAD_ROOT, ensure_upload_dir
-from app.services.quality.quality_service import build_quality_score
 
 
 def _quality_for_df(dataset_id: int, df: pd.DataFrame) -> float:

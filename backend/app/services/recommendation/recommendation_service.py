@@ -7,8 +7,6 @@ the uploaded dataset — nothing is hardcoded.
 """
 from __future__ import annotations
 
-import pandas as pd
-
 from app.models.dataset import Dataset
 from app.schemas.insights import RecommendationOut
 from app.services.datasets.dataframe_loader import load_dataframe, numeric_columns, categorical_columns

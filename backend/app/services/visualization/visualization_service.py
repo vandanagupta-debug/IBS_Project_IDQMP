@@ -7,7 +7,6 @@ each column's inferred type.
 """
 from __future__ import annotations
 
-import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
@@ -27,7 +26,6 @@ def _dtype_distribution(df: pd.DataFrame) -> list[NameValueOut]:
     num = len(numeric_columns(df))
     counts: dict[str, int] = {"Numeric": num}
     for c in categorical_columns(df):
-        series = df[c].dropna()
         if pd.api.types.is_bool_dtype(df[c]):
             key = "Boolean"
         elif pd.api.types.is_datetime64_any_dtype(df[c]):

@@ -10,19 +10,21 @@ from sqlalchemy.pool import StaticPool
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from app.main import app  # noqa: E402
 from app.database.base import Base  # noqa: E402
 from app.database.deps import get_db  # noqa: E402
+from app.main import app  # noqa: E402
 
-# Import every model so Base.metadata is aware of all tables before create_all().
-from app.models.endpoint import Endpoint  # noqa: E402,F401
-from app.models.testrun import TestRun  # noqa: E402,F401
-from app.models.testcase import TestCase  # noqa: E402,F401
-from app.models.user import User  # noqa: E402,F401
-from app.models.dataset import Dataset  # noqa: E402,F401
-from app.models.dq_report import DQReport  # noqa: E402,F401
-from app.models.collection import Collection  # noqa: E402,F401
-from app.models.report import Report  # noqa: E402,F401
+# Import every model module so Base.metadata is aware of all tables before
+# create_all(). Importing the module (not a specific class name) avoids any
+# risk of an ImportError if a class inside doesn't match an assumed name.
+from app.models import collection  # noqa: E402,F401
+from app.models import dataset  # noqa: E402,F401
+from app.models import dq_report  # noqa: E402,F401
+from app.models import endpoint  # noqa: E402,F401
+from app.models import report  # noqa: E402,F401
+from app.models import testcase  # noqa: E402,F401
+from app.models import testrun  # noqa: E402,F401
+from app.models import user  # noqa: E402,F401
 
 TEST_DATABASE_URL = "sqlite:///:memory:"
 

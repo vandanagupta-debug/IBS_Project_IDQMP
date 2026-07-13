@@ -11,9 +11,9 @@ from __future__ import annotations
 from app.models.dataset import Dataset
 from app.schemas.insights import RecommendationOut
 from app.services.datasets.dataframe_loader import (
+    categorical_columns,
     load_dataframe,
     numeric_columns,
-    categorical_columns,
 )
 from app.services.insights.insights_service import build_insights
 

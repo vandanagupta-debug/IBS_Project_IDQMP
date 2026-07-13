@@ -10,18 +10,18 @@ computed against `load_dataframe(dataset)`.
 from __future__ import annotations
 
 import numpy as np
-from sklearn.ensemble import IsolationForest
-from sklearn.neighbors import LocalOutlierFactor
-from sklearn.impute import SimpleImputer
 from sklearn.decomposition import PCA
+from sklearn.ensemble import IsolationForest
+from sklearn.impute import SimpleImputer
+from sklearn.neighbors import LocalOutlierFactor
 from sklearn.preprocessing import MinMaxScaler
 
 from app.models.dataset import Dataset
 from app.schemas.anomaly import (
     AlgorithmSummaryOut,
     AnomalySummaryOut,
-    ScatterPointOut,
     OutlierRowOut,
+    ScatterPointOut,
 )
 from app.services.datasets.dataframe_loader import load_dataframe, numeric_columns
 

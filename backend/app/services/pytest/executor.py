@@ -1,6 +1,6 @@
+import os
 import subprocess
 import sys
-import os
 
 TEST_DIR = "app/generated_tests"
 TEST_FILE = os.path.join(TEST_DIR, "test_api.py")

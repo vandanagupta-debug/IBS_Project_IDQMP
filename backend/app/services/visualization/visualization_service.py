@@ -22,9 +22,9 @@ from app.schemas.visualization import (
     VisualizationsOut,
 )
 from app.services.datasets.dataframe_loader import (
+    categorical_columns,
     load_dataframe,
     numeric_columns,
-    categorical_columns,
 )
 from app.services.quality.quality_service import build_quality_score
 from app.services.validation.validation_service import build_validation_summary

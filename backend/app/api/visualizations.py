@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.database.deps import get_db
 from app.api._common import get_processed_dataset_or_404
+from app.database.deps import get_db
 from app.schemas.visualization import VisualizationsOut
-from app.services.visualization.visualization_service import build_visualizations
 from app.services.datasets.dataframe_loader import DatasetNotReadyError
+from app.services.visualization.visualization_service import build_visualizations
 
 router = APIRouter(prefix="/datasets", tags=["visualizations"])
 

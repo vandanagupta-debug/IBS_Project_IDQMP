@@ -1,5 +1,7 @@
-from fastapi import APIRouter, UploadFile, File
 import json
+
+from fastapi import APIRouter, File, UploadFile
+
 from app.services.parser.postman_parser import parse_postman
 
 router = APIRouter()

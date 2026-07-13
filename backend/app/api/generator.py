@@ -1,6 +1,7 @@
 from fastapi import APIRouter
-from app.services.ai.test_generator import generate_test
+
 from app.api.upload import parsed_endpoints
+from app.services.ai.test_generator import generate_test
 
 router = APIRouter()
 

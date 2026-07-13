@@ -3,12 +3,12 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.database.deps import get_db
 from app.api._common import get_processed_dataset_or_404
+from app.database.deps import get_db
 from app.schemas.insights import InsightsSummaryOut, RecommendationOut
+from app.services.datasets.dataframe_loader import DatasetNotReadyError
 from app.services.insights.insights_service import build_insights
 from app.services.recommendation.recommendation_service import build_recommendations
-from app.services.datasets.dataframe_loader import DatasetNotReadyError
 
 router = APIRouter(prefix="/datasets", tags=["insights"])
 

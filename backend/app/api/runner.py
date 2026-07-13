@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
+from app.api.generator import generated_tests
 from app.database.deps import get_db
 from app.models.testrun import TestRun
-from app.services.pytest.executor import save_tests, run_tests
-from app.api.generator import generated_tests
+from app.services.pytest.executor import run_tests, save_tests
 
 router = APIRouter()
 

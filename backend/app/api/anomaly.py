@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.database.deps import get_db
 from app.api._common import get_processed_dataset_or_404
+from app.database.deps import get_db
 from app.schemas.anomaly import AnomalySummaryOut
 from app.services.anomaly.anomaly_service import build_anomaly_summary
 from app.services.datasets.dataframe_loader import DatasetNotReadyError

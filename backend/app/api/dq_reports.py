@@ -13,8 +13,8 @@ from app.schemas.dq_report import (
     DQReportGenerateIn,
     DQReportOut,
 )
-from app.services.dq_report.dq_report_service import generate_report
 from app.services.datasets.dataframe_loader import DatasetNotReadyError
+from app.services.dq_report.dq_report_service import generate_report
 
 router = APIRouter(prefix="/dq-reports", tags=["reports"])
 

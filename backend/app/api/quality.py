@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.database.deps import get_db
 from app.api._common import get_processed_dataset_or_404
+from app.database.deps import get_db
 from app.schemas.quality import QualityScoreOut
-from app.services.quality.quality_service import build_quality_score
 from app.services.datasets.dataframe_loader import DatasetNotReadyError
+from app.services.quality.quality_service import build_quality_score
 
 router = APIRouter(prefix="/datasets", tags=["quality"])
 

@@ -18,10 +18,10 @@ from app.schemas.insights import (
     InsightsSummaryOut,
 )
 from app.services.datasets.dataframe_loader import (
-    load_dataframe,
-    numeric_columns,
     categorical_columns,
     duplicate_row_count,
+    load_dataframe,
+    numeric_columns,
 )
 
 NEGATIVE_SUSPECT_PATTERN = (

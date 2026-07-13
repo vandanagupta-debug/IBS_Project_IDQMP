@@ -1,27 +1,25 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.config import settings
-from app.core.logging import configure_logging
-
-from app.api.health import router as health_router
-from app.api.upload import router as upload_router
-from app.api.generator import router as gen_router
-from app.api.runner import router as run_router
-from app.api.reports import router as rep_router
+from app.api.anomaly import router as anomaly_router
+from app.api.cleaning import router as cleaning_router
 from app.api.datasets import router as datasets_router
+from app.api.dq_reports import router as dq_reports_router
+from app.api.generator import router as gen_router
+from app.api.health import router as health_router
+from app.api.insights import router as insights_router
 from app.api.profiling import router as profiling_router
 from app.api.quality import router as quality_router
-from app.api.anomaly import router as anomaly_router
-from app.api.insights import router as insights_router
+from app.api.reports import router as rep_router
+from app.api.runner import router as run_router
+from app.api.upload import router as upload_router
 from app.api.validation import router as validation_router
 from app.api.visualizations import router as visualizations_router
-from app.api.cleaning import router as cleaning_router
-from app.api.dq_reports import router as dq_reports_router
-
+from app.core.config import settings
+from app.core.logging import configure_logging
 from app.database.base import Base
 from app.database.session import engine
-from app.models import endpoint, testrun, dataset, dq_report  # noqa: F401
+from app.models import dataset, dq_report, endpoint, testrun  # noqa: F401
 
 configure_logging()
 

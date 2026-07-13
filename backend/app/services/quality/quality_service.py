@@ -15,10 +15,10 @@ import pandas as pd
 from app.models.dataset import Dataset
 from app.schemas.quality import QualityDimensionOut, QualityScoreOut
 from app.services.datasets.dataframe_loader import (
-    load_dataframe,
-    numeric_columns,
     categorical_columns,
     duplicate_row_count,
+    load_dataframe,
+    numeric_columns,
 )
 
 _EMPTY_LIKE = {"", "na", "n/a", "null", "none", "nan", "-", "?"}

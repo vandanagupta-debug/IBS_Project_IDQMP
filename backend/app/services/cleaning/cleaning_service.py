@@ -22,9 +22,9 @@ from app.schemas.cleaning import (
     CleaningSnapshotOut,
 )
 from app.services.datasets.dataframe_loader import (
+    categorical_columns,
     load_dataframe,
     numeric_columns,
-    categorical_columns,
 )
 from app.services.datasets.dataset_service import UPLOAD_ROOT, ensure_upload_dir
 

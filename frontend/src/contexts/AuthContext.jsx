@@ -34,7 +34,11 @@ export const AuthProvider = ({ children }) => {
     if (storedToken && storedUser) {
       try {
         const payload = JSON.parse(atob(storedToken.split('.')[1]));
-        if (payload.exp && payload.exp > Date.now()) {
+        // JWT `exp` is in seconds since epoch; Date.now() is in milliseconds.
+        // Multiply exp by 1000 before comparing, or every stored token looks
+        // expired (since exp will almost always be numerically smaller than
+        // Date.now()) and a valid session gets wiped on every page load.
+        if (payload.exp && payload.exp * 1000 > Date.now()) {
           setToken(storedToken);
           setUser(JSON.parse(storedUser));
         } else {

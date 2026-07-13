@@ -8,7 +8,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": false,
-    "types": ["@playwright/test"]
+    "types": ["@playwright/test", "node"]
   },
   "include": ["tests/e2e/**/*.ts"]
 }

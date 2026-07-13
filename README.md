@@ -355,6 +355,14 @@ git add <resolved-file>
 git commit                        # completes the merge
 ```
 
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/vandanagupta-debug/IBS_Project_IDQMP.git
+git pull origin main --rebase
+git push -u origin main
+
 ## CI/CD
 
 Three workflows under `.github/workflows/`:

@@ -56,6 +56,9 @@ export const uploadDataset = (file, onProgress) => {
 export const getDatasetDetails = (id) =>
   axiosInstance.get(`/datasets/${id}`).then((res) => ({ data: normalizeDataset(res.data) }));
 
+export const getDatasetSummary = () =>
+  axiosInstance.get('/datasets/summary').then((res) => ({ data: res.data }));
+
 export const deleteDataset = (id) =>
   axiosInstance.delete(`/datasets/${id}`).then((res) => ({ data: res.data }));
 

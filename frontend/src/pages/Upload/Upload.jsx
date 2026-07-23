@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import { FiDownload, FiTrash2, FiEye, FiUploadCloud, FiAlertTriangle } from 'react-icons/fi';
+import { FiDownload, FiTrash2, FiEye, FiUploadCloud, FiAlertTriangle, FiLayers, FiCheckCircle, FiClock, FiDatabase } from 'react-icons/fi';
 import FileUploader from '../../components/common/FileUploader';
 import SearchBar from '../../components/common/SearchBar';
 import Table from '../../components/common/Table';
 import Pagination from '../../components/common/Pagination';
 import Modal from '../../components/common/Modal';
 import Loader from '../../components/common/Loader';
-import { getDatasets, uploadDataset, deleteDataset, getDatasetDetails, downloadDataset } from '../../api/datasetsApi';
+import { getDatasets, getDatasetSummary, uploadDataset, deleteDataset, getDatasetDetails, downloadDataset } from '../../api/datasetsApi';
 import { useToast } from '../../contexts/ToastContext';
 import '../../styles/page-layout.css';
 import './upload.css';
@@ -30,6 +30,15 @@ const Upload = () => {
   const [selected, setSelected] = useState(null);
   const [detailsLoading, setDetailsLoading] = useState(false);
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+  const [summary, setSummary] = useState({
+    total: 0,
+    processed: 0,
+    processing: 0,
+    failed: 0,
+    total_rows: 0,
+    total_columns: 0,
+  });
+  const [summaryLoading, setSummaryLoading] = useState(true);
 
   const fetchDatasets = useCallback(async () => {
     setLoading(true);
@@ -50,9 +59,29 @@ const Upload = () => {
     }
   }, [search, page]);
 
+  const fetchSummary = useCallback(async () => {
+    setSummaryLoading(true);
+    try {
+      const { data } = await getDatasetSummary();
+      setSummary(data);
+    } catch (err) {
+      setSummary({
+        total: 0,
+        processed: 0,
+        processing: 0,
+        failed: 0,
+        total_rows: 0,
+        total_columns: 0,
+      });
+    } finally {
+      setSummaryLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     fetchDatasets();
-  }, [fetchDatasets]);
+    fetchSummary();
+  }, [fetchDatasets, fetchSummary]);
 
   const handleUploadComplete = (dataset) => {
     if (dataset?.status === 'Failed') {
@@ -63,6 +92,7 @@ const Upload = () => {
     setSearch('');
     setPage(1);
     fetchDatasets();
+    fetchSummary();
   };
 
   const handleUploadError = (err) => {
@@ -74,6 +104,7 @@ const Upload = () => {
       await deleteDataset(id);
       showToast('Dataset deleted.', 'info');
       fetchDatasets();
+      fetchSummary();
     } catch (err) {
       showToast(err?.response?.data?.detail || 'Could not delete dataset.', 'danger');
     } finally {
@@ -131,6 +162,42 @@ const Upload = () => {
         <div>
           <h1>Dataset Upload</h1>
           <p className="page-subtitle">Upload CSV or Excel files for profiling, validation, and AI cleaning.</p>
+        </div>
+        <div className="page-header-actions">
+          <button className="btn btn-outline" onClick={fetchSummary} disabled={summaryLoading}>
+            {summaryLoading ? 'Refreshing…' : 'Refresh stats'}
+          </button>
+        </div>
+      </div>
+
+      <div className="page-header-cards">
+        <div className="header-card">
+          <div className="header-card-icon header-card-icon-primary"><FiLayers /></div>
+          <div className="header-card-info">
+            <span>Total datasets</span>
+            <strong>{summaryLoading ? '—' : summary.total}</strong>
+          </div>
+        </div>
+        <div className="header-card">
+          <div className="header-card-icon header-card-icon-success"><FiCheckCircle /></div>
+          <div className="header-card-info">
+            <span>Processed</span>
+            <strong>{summaryLoading ? '—' : summary.processed}</strong>
+          </div>
+        </div>
+        <div className="header-card">
+          <div className="header-card-icon header-card-icon-warning"><FiClock /></div>
+          <div className="header-card-info">
+            <span>In progress</span>
+            <strong>{summaryLoading ? '—' : summary.processing}</strong>
+          </div>
+        </div>
+        <div className="header-card">
+          <div className="header-card-icon header-card-icon-accent"><FiDatabase /></div>
+          <div className="header-card-info">
+            <span>Rows scanned</span>
+            <strong>{summaryLoading ? '—' : summary.total_rows.toLocaleString()}</strong>
+          </div>
         </div>
       </div>
 

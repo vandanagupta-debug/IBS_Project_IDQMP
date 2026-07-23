@@ -25,6 +25,15 @@ class DatasetListOut(BaseModel):
     page_size: int
 
 
+class DatasetSummaryOut(BaseModel):
+    total: int
+    processed: int
+    processing: int
+    failed: int
+    total_rows: int
+    total_columns: int
+
+
 class DatasetDeleteOut(BaseModel):
     id: int
     deleted: bool

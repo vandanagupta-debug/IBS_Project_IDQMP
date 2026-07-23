@@ -3,12 +3,12 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse
-from sqlalchemy import func
+from sqlalchemy import case, func
 from sqlalchemy.orm import Session
 
 from app.database.deps import get_db
 from app.models.dataset import Dataset
-from app.schemas.dataset import DatasetDeleteOut, DatasetListOut, DatasetOut
+from app.schemas.dataset import DatasetDeleteOut, DatasetListOut, DatasetOut, DatasetSummaryOut
 from app.services.datasets import dataset_service
 
 router = APIRouter(prefix="/datasets", tags=["datasets"])
@@ -49,6 +49,25 @@ async def upload_dataset(file: UploadFile = File(...), db: Session = Depends(get
     db.commit()
     db.refresh(dataset)
     return dataset
+
+
+@router.get("/summary", response_model=DatasetSummaryOut)
+def get_dataset_summary(db: Session = Depends(get_db)):
+    total = db.query(func.count(Dataset.id)).scalar() or 0
+    processed = db.query(func.count(Dataset.id)).filter(Dataset.status == "processed").scalar() or 0
+    processing = db.query(func.count(Dataset.id)).filter(Dataset.status == "processing").scalar() or 0
+    failed = db.query(func.count(Dataset.id)).filter(Dataset.status == "failed").scalar() or 0
+    total_rows = db.query(func.coalesce(func.sum(Dataset.rows), 0)).scalar() or 0
+    total_columns = db.query(func.coalesce(func.sum(Dataset.columns), 0)).scalar() or 0
+
+    return DatasetSummaryOut(
+        total=total,
+        processed=processed,
+        processing=processing,
+        failed=failed,
+        total_rows=total_rows,
+        total_columns=total_columns,
+    )
 
 
 @router.get("", response_model=DatasetListOut)

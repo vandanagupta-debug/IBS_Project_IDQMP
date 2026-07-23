@@ -4,6 +4,10 @@ AI-assisted data quality, profiling, validation, and test-generation
 platform. FastAPI backend + React (Vite) frontend, containerized with
 Docker, tested with Pytest and Playwright, and built/verified with GitHub
 Actions.
+AI-assisted data quality, profiling, validation, and test-generation
+platform. FastAPI backend + React (Vite) frontend, containerized with
+Docker, tested with Pytest and Playwright, and built/verified with GitHub
+Actions.
 
 ## Table of contents
 

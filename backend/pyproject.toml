@@ -1,0 +1,11 @@
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# B008: FastAPI's dependency-injection pattern (`Depends(...)`, `File(...)`,
+# `Query(...)` as parameter defaults) is idiomatic and intentional here, not a bug.
+ignore = ["B008"]

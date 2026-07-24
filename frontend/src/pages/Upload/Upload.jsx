@@ -64,7 +64,7 @@ const Upload = () => {
     try {
       const { data } = await getDatasetSummary();
       setSummary(data);
-    } catch (err) {
+    } catch (_err) {
       setSummary({
         total: 0,
         processed: 0,

@@ -29,7 +29,7 @@ export const loginRequest = async ({ email, password }) => {
   return simulateRequest({ token, user: safeUser }, { delay: 800 });
 };
 
-export const registerRequest = async ({ name, email, password, role = 'Analyst' }) => {
+export const registerRequest = async ({ name, email, password: _password, role = 'Analyst' }) => {
   const exists = MOCK_USERS.some((u) => u.email.toLowerCase() === email.toLowerCase());
   if (exists) {
     return simulateRequest(null, { delay: 600 }).then(() => {
@@ -52,7 +52,7 @@ export const forgotPasswordRequest = async ({ email }) => {
   return simulateRequest({ message: `Password reset instructions sent to ${email}.` }, { delay: 700 });
 };
 
-export const resetPasswordRequest = async ({ token, newPassword }) => {
+export const resetPasswordRequest = async ({ token: _token, newPassword: _newPassword }) => {
   return simulateRequest({ message: 'Password reset successful.' }, { delay: 700 });
 };
 
@@ -60,6 +60,6 @@ export const updateProfileRequest = async (updates) => {
   return simulateRequest({ ...updates }, { delay: 500 });
 };
 
-export const changePasswordRequest = async ({ currentPassword, newPassword }) => {
+export const changePasswordRequest = async ({ currentPassword: _currentPassword, newPassword: _newPassword }) => {
   return simulateRequest({ message: 'Password changed successfully.' }, { delay: 600 });
 };

@@ -21,7 +21,7 @@ const ForgotPassword = () => {
     try {
       await forgotPasswordRequest(formData);
       setSent(true);
-    } catch (err) {
+    } catch (_err) {
       setServerError('Unable to send reset instructions. Please try again.');
     }
   };

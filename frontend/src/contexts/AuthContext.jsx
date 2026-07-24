@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
         } else {
           clearStoredSession();
         }
-      } catch (e) {
+      } catch (_e) {
         clearStoredSession();
       }
     }

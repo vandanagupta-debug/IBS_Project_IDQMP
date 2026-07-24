@@ -23,7 +23,7 @@ export function useProcessedDatasets() {
         const processed = data.items.filter((d) => d.status === 'Processed');
         setDatasets(processed);
         if (processed.length > 0) setSelectedId(String(processed[0].id));
-      } catch (err) {
+      } catch (_err) {
         setDatasetsError('Could not load your datasets. Please try again.');
       } finally {
         setDatasetsLoading(false);

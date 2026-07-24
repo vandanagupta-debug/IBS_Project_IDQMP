@@ -1,9 +1,11 @@
 import js from '@eslint/js';
+import react from 'eslint-plugin-react';
 
 export default [
   js.configs.recommended,
   {
     files: ['**/*.{js,jsx}'],
+    plugins: { react },
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -20,8 +22,9 @@ export default [
       },
     },
     rules: {
-      'no-unused-vars': ['warn', { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }],
-      'no-undef': 'off', // JSX identifiers (React components) trip this up without the React plugin installed
+      'no-unused-vars': ['warn', { varsIgnorePattern: '^_', argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
+      'no-undef': 'off',
+      'react/jsx-uses-vars': 'warn',
     },
   },
   {
